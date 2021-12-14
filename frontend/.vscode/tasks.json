@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Sass Compile All",
+            "type": "shell",
+            "command": "node-sass ./gov-portal/src/theme/taxadministration/style.scss ./gov-portal/src/theme/taxadministration/style.css; node-sass ./gov-portal/src/theme/workandpensionsdepartment/style.scss ./gov-portal/src/theme/workandpensionsdepartment/style.css; node-sass ./gov-portal/src/theme/healthsecurityagency/style.scss ./gov-portal/src/theme/healthsecurityagency/style.css",
+            "group": "build",
+            "problemMatcher": [
+                "$node-sass"
+            ]
+        }
+    ]
+}

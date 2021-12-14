@@ -1,0 +1,67 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: workandpensionsdepartment-bc-frontend-deployment
+  labels:
+    app: workandpensionsdepartment-bc-frontend
+spec:
+  selector:
+    matchLabels:
+      app: workandpensionsdepartment-bc-frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: workandpensionsdepartment-bc-frontend
+        version: v1
+    spec:
+      containers:
+      - name: workandpensionsdepartment-bc-frontend
+        image: 'eu-frankfurt-1.ocir.io/oraseemeaceeociworkshop/ivandelic/taxadministration/taxadministration-frontend:latest'
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_API_URL
+          value: https://i25fky4dpjckqerar545wea6tq.apigateway.eu-frankfurt-1.oci.customer-oci.com/workandpensionsdepartment-bc-api
+        - name: REACT_APP_MODE
+          value: WORKANDPENSIONSDEPARTMENT
+        - name: REACT_APP_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: obp-restproxy-token
+              key: token
+      imagePullSecrets:
+      - name: ocirsecret
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: workandpensionsdepartment-bc-frontend-service
+  labels:
+    app: workandpensionsdepartment-bc-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: workandpensionsdepartment-bc-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: workandpensionsdepartment-bc-frontend-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - secretName: tls-secret
+  rules:
+  - host: "workandpensionsdepartment.blockchain.ivandelic.com"
+    http:
+      paths:
+      - backend:
+          serviceName: workandpensionsdepartment-bc-frontend-service
+          servicePort: 3000
+---
