@@ -1,29 +1,29 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: healthsecurityagency-bc-frontend-deployment
+  name: healthsecurityagency-frontend-deployment
   labels:
-    app: healthsecurityagency-bc-frontend
+    app: healthsecurityagency-frontend
 spec:
   selector:
     matchLabels:
-      app: healthsecurityagency-bc-frontend
-  replicas: 2
+      app: healthsecurityagency-frontend
+  replicas: 1
   template:
     metadata:
       labels:
-        app: healthsecurityagency-bc-frontend
+        app: healthsecurityagency-frontend
         version: v1
     spec:
       containers:
-      - name: healthsecurityagency-bc-frontend
-        image: 'eu-frankfurt-1.ocir.io/oraseemeaceeociworkshop/ivandelic/taxadministration/taxadministration-frontend:latest'
+      - name: healthsecurityagency-frontend
+        image: 'fra.ocir.io/frsxwtjslf35/demo/healthsecurityagency-frontend:latest'
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
         - name: REACT_APP_API_URL
-          value: https://i25fky4dpjckqerar545wea6tq.apigateway.eu-frankfurt-1.oci.customer-oci.com/healthsecurityagency-bc-api
+          value: https://i25fky4dpjckqerar545wea6tq.apigateway.eu-frankfurt-1.oci.customer-oci.com/healthsecurityagency-api
         - name: REACT_APP_MODE
           value: HEALTHSECURITYAGENCY
         - name: REACT_APP_ACCESS_TOKEN
@@ -37,30 +37,32 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: healthsecurityagency-bc-frontend-service
+  name: healthsecurityagency-frontend-service
   labels:
-    app: healthsecurityagency-bc-frontend
+    app: healthsecurityagency-frontend
 spec:
   type: ClusterIP
   selector:
-    app: healthsecurityagency-bc-frontend
+    app: healthsecurityagency-frontend
   ports:
   - port: 3000
     targetPort: 3000
 ---
+apiVersion: networking.k8s.io/v1
 kind: Ingress
-apiVersion: networking.k8s.io/v1beta1
 metadata:
-  name: healthsecurityagency-bc-frontend-ingress
+  name: healthsecurityagency-frontend-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
-  tls:
-  - secretName: tls-secret
   rules:
-  - host: "healthsecurityagency.blockchain.ivandelic.com"
+  - host: "health.blockchain.ivandelic.com"
     http:
       paths:
-      - backend:
-          serviceName: healthsecurityagency-bc-frontend-service
-          servicePort: 3000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: healthsecurityagency-frontend-service
+            port:
+              number: 3000
