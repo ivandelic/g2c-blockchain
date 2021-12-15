@@ -3,10 +3,9 @@ export class BlockchainService {
     constructor() {
         this.baseUrl = process.env.REACT_APP_API_URL;
         this.accessToken = "Basic " + process.env.REACT_APP_ACCESS_TOKEN;
+        this.taxChaincode = process.env.REACT_APP_TAX_CHAINCODE;
+        this.workChaincode = process.env.REACT_APP_WORK_CHAINCODE;
     }
-
-    form_chaincode = "form-20T1041";
-    grants_chaincode = "workandpensionsdepartment-grants";
 
     listContracts() {
         return fetch(this.baseUrl + "/chaincode-queries", { 
@@ -16,7 +15,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getContractByRange", "", ""]
             })
           }).then(promise => promise.json());
@@ -30,7 +29,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getContractById", id]
             })
           }).then(promise => promise.json());
@@ -44,7 +43,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getContractHistoryById", id]
             })
           }).then(promise => promise.json());
@@ -58,7 +57,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["createRelationship", personId, employerId, workingHours, effectiveDate, contractDate, contractId],
                 timeout: 18000,
                 sync: true
@@ -74,7 +73,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["updateRelationship", contractId, workingHours, effectiveDate],
                 timeout: 18000,
                 sync: true
@@ -90,7 +89,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["terminateRelationship", contractId, effectiveDate],
                 timeout: 18000,
                 sync: true
@@ -106,7 +105,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["suspendRelationshipStart", contractId, suspensionStartDate],
                 timeout: 18000,
                 sync: true
@@ -122,7 +121,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["suspendAllRelationshipStart", personId, "" + suspensionStartDate.getTime() + ""],
                 timeout: 18000,
                 sync: true
@@ -138,7 +137,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["suspendRelationshipEnd", contractId, suspensionEndDate],
                 timeout: 18000,
                 sync: true
@@ -154,7 +153,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getPersonByRange", "", ""]
             })
           }).then(promise => promise.json());
@@ -168,7 +167,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getPersonById", id]
             })
           }).then(promise => promise.json());
@@ -182,7 +181,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getPersonHistoryById", id]
             })
           }).then(promise => promise.json());
@@ -196,7 +195,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["executeQuery", "SELECT json_extract(valueJson, '$.contractDate') AS contractDate, json_extract(valueJson, '$.contractId') AS contractId, json_extract(valueJson, '$.employerId') AS employerId, json_extract(valueJson, '$.personId') AS personId FROM <STATE> WHERE json_extract(valueJson, '$.assetType') = 'demo_20T1041_v2.contract' AND json_extract(valueJson, '$.personId') = '" + id + "' AND json_extract(valueJson, '$.insuranceEnd') is null"]
             })
           }).then(promise => promise.json());
@@ -210,7 +209,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["createPerson", "" + JSON.stringify(person) + ""],
                 timeout: 18000,
                 sync: true
@@ -226,7 +225,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["updatePerson", "" + JSON.stringify(person) + ""],
                 timeout: 18000,
                 sync: true
@@ -242,7 +241,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["deletePerson", "" + id + ""],
                 timeout: 18000,
                 sync: true
@@ -258,7 +257,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getEmployerByRange", "", ""]
             })
           }).then(promise => promise.json());
@@ -272,7 +271,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getEmployerById", id]
             })
           }).then(promise => promise.json());
@@ -286,7 +285,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["getEmployerHistoryById", id]
             })
           }).then(promise => promise.json());
@@ -300,7 +299,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["executeQuery", "SELECT json_extract(valueJson, '$.contractDate') AS contractDate, json_extract(valueJson, '$.contractId') AS contractId, json_extract(valueJson, '$.employerId') AS employerId, json_extract(valueJson, '$.personId') AS personId FROM <STATE> WHERE json_extract(valueJson, '$.assetType') = 'demo_20T1041_v2.contract' AND json_extract(valueJson, '$.employerId') = '" + id + "' AND json_extract(valueJson, '$.insuranceEnd') is null"]
             })
           }).then(promise => promise.json());
@@ -314,7 +313,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["createEmployer", "" + JSON.stringify(employer) + ""],
                 timeout: 18000,
                 sync: true
@@ -330,7 +329,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["updateEmployer", "" + JSON.stringify(employer) + ""],
                 timeout: 18000,
                 sync: true
@@ -346,7 +345,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.form_chaincode,
+                chaincode: this.taxChaincode,
                 args: ["deleteEmployer", "" + id + ""],
                 timeout: 18000,
                 sync: true
@@ -362,7 +361,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.grants_chaincode,
+                chaincode: this.workChaincode,
                 args: ["getLeaveByRange", "", ""]
             })
           }).then(promise => promise.json());
@@ -376,7 +375,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.grants_chaincode,
+                chaincode: this.workChaincode,
                 args: ["getLeaveById", id]
             })
           }).then(promise => promise.json());
@@ -390,7 +389,7 @@ export class BlockchainService {
                 'Content-Type': 'application/json'
             }), 
             body: JSON.stringify({
-                chaincode: this.grants_chaincode,
+                chaincode: this.workChaincode,
                 args: ["startLeave", personId, employerId, leaveDate, leaveId],
                 timeout: 18000,
                 sync: true
