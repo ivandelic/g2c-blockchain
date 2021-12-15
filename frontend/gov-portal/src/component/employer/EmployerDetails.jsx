@@ -67,8 +67,18 @@ class EmployerDetails extends Component {
             });
         });
         this.service.listEmployerHistory(id).then(history => {
+            var sortedHistory = history.result.payload;
+            sortedHistory.sort(function(a, b) {    
+                if (a["timeStamp"] > b["timeStamp"]) {    
+                    return 1;    
+                } else if (a["timeStamp"] < b["timeStamp"]) {    
+                    return -1;    
+                } else {
+                    return 0;
+                }    
+            });
             this.setState({ 
-                history: history.result.payload
+                history: sortedHistory
             });
         });
         this.service.listEmployerContracts(id).then(contracts => {
@@ -172,7 +182,7 @@ class EmployerDetails extends Component {
                                 }
                             </div>
                         }
-                        {(this.state.mode === Form.Mode.LATEST || this.state.mode === Form.Mode.NEW || (this.state.mode === Form.Mode.HISTORY && this.state.transaction.isDelete == false)) && 
+                        {(this.state.mode === Form.Mode.LATEST || this.state.mode === Form.Mode.NEW || (this.state.mode === Form.Mode.HISTORY && !this.state.transaction.isDelete)) && 
                             <div className="p-col-12">
                                 <Divider align="center" type="dashed">Employer Details</Divider>
                                 <div className="p-fluid p-formgrid p-grid">

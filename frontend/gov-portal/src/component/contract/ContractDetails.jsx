@@ -82,8 +82,18 @@ class ContractDetails extends Component {
             });
         });
         this.service.listContractHistory(id).then(history => {
+            var sortedHistory = history.result.payload;
+            sortedHistory.sort(function(a, b) {    
+                if (a["timeStamp"] > b["timeStamp"]) {    
+                    return 1;    
+                } else if (a["timeStamp"] < b["timeStamp"]) {    
+                    return -1;    
+                } else {
+                    return 0;
+                }    
+            });
             this.setState({ 
-                history: history.result.payload
+                history: sortedHistory
             });
         });
     }
@@ -197,7 +207,7 @@ class ContractDetails extends Component {
                                 }
                             </div>
                         }
-                        {(this.state.mode === Form.Mode.LATEST || this.state.mode === Form.Mode.NEW || (this.state.mode === Form.Mode.HISTORY && this.state.transaction.isDelete == false)) && 
+                        {(this.state.mode === Form.Mode.LATEST || this.state.mode === Form.Mode.NEW || (this.state.mode === Form.Mode.HISTORY && !this.state.transaction.isDelete)) && 
                             <div className="p-col-12">
                                 {this.state.mode !== Form.Mode.NEW && 
                                     <div className="p-fluid p-formgrid p-grid">
