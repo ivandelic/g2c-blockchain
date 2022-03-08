@@ -25,7 +25,9 @@ class WorkandPensionsDepartment extends Component {
             {label: 'Grants', icon: 'pi pi-fw pi-money-bill', command: (event) => { window.location.href = "/grants"; }}
         ];
     }
-
+    componentDidMount() {
+        document.title = "Department for Work and Pensions";
+    }
     render() {
         return (
             <BrowserRouter>

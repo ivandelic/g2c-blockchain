@@ -1,4 +1,4 @@
-FROM node:12.2.0-alpine
+FROM node:17-alpine
 WORKDIR /g2c-blockchain
 COPY . ./
 RUN npm install

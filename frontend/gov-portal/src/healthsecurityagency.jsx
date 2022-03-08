@@ -22,6 +22,10 @@ class HealthSecurityAgency extends Component {
         ];
     }
 
+    componentDidMount() {
+        document.title = "Health Security Agency";
+    }
+
     render() {
         return (
             <BrowserRouter>

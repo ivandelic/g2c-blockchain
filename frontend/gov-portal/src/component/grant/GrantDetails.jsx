@@ -122,7 +122,7 @@ class GrantDetails extends Component {
                         <div className="p-col-12 button-container">
                             <Divider type="dashed"></Divider>
                             {(this.state.mode === Form.Mode.LATEST || this.state.mode === Form.Mode.NEW) && 
-                                <Button label="Save Person" icon="pi pi-save" onClick={this.onSave.bind(this)} />
+                                <Button label="Save Grant" icon="pi pi-save" onClick={this.onSave.bind(this)} />
                             }
                         </div>
                     </div>

@@ -8,7 +8,7 @@ import PersonDetails from './component/person/PersonDetails';
 import Employers from './component/employer/Employers';
 import EmployerDetails from './component/employer/EmployerDetails';
 import Home from './component/home/Home';
-import Logo from './theme/taxadministration/logo.svg'
+import Logo from './theme/taxadministration/logo.png'
 import './theme/taxadministration/style.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/md-light-indigo/theme.css';
@@ -24,6 +24,10 @@ class TaxAdministration extends Component {
             {key: 3, label: 'Employer', icon: 'pi pi-briefcase', command: (event) => { window.location.href = "/employers"; }},
             {key: 4, label: 'Contract', icon: 'pi pi-fw pi-ticket', command: (event) => { window.location.href = "/contracts"; }},
         ];
+    }
+
+    componentDidMount() {
+        document.title = "Tax Administration";
     }
 
     render() {

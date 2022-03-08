@@ -14,7 +14,7 @@
     "react-transition-group": "4.3.0"
   },
   "devDependencies": {
-    "node-sass": "7.0.0"
+    "node-sass": "7.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
